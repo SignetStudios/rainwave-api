@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using log4net;
 using Newtonsoft.Json;
@@ -41,7 +40,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Album>("album", parms);
+				var result = await MakeRequest<Album>("album", parms);
 
 				return result;
 			}
@@ -62,7 +61,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Album>>("all_albums", parms);
+				var result = await MakeRequest<List<Album>>("all_albums", parms);
 
 				return result;
 			}
@@ -81,7 +80,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Artist>>("all_artists", parms);
+				var result = await MakeRequest<List<Artist>>("all_artists", parms);
 
 				return result;
 			}
@@ -101,7 +100,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("all_faves", parms);
+				var result = await MakeRequest<List<Song>>("all_faves", parms);
 
 				return result;
 			}
@@ -122,7 +121,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Group>>("all_groups", parms);
+				var result = await MakeRequest<List<Group>>("all_groups", parms);
 
 				return result;
 			}
@@ -143,7 +142,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("all_songs", parms);
+				var result = await MakeRequest<List<Song>>("all_songs", parms);
 
 				return result;
 			}
@@ -163,7 +162,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Artist>("artist", parms);
+				var result = await MakeRequest<Artist>("artist", parms);
 
 				return result;
 			}
@@ -181,12 +180,12 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("clear_rating", parms);
+			return await GetRequestSuccess("clear_rating", parms);
 		}
 
 		public async Task<bool> ClearRequests()
 		{
-			var result = await makeRequest("clear_requests");
+			var result = await MakeRequest("clear_requests");
 
 			try
 			{
@@ -211,7 +210,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<User>>("current_listeners", parms);
+				var result = await MakeRequest<List<User>>("current_listeners", parms);
 
 				return result;
 			}
@@ -229,7 +228,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("delete_request", parms);
+			return await GetRequestSuccess("delete_request", parms);
 		}
 
 		public async Task<bool> FaveAlbum(SiteId siteId, int albumId, bool fave)
@@ -241,7 +240,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("fave_album", parms);
+			return await GetRequestSuccess("fave_album", parms);
 		}
 
 		public async Task<bool> FaveSong(SiteId siteId, int songId, bool fave)
@@ -253,7 +252,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("fave_song", parms);
+			return await GetRequestSuccess("fave_song", parms);
 		}
 
 		public async Task<Group> Group(SiteId siteId, int groupId)
@@ -266,7 +265,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Group>("group", parms);
+				var result = await MakeRequest<Group>("group", parms);
 
 				return result;
 			}
@@ -287,7 +286,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Info>("info", parms);
+				var result = await MakeRequest<Info>("info", parms);
 
 				return result;
 			}
@@ -308,7 +307,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Info>>("info_all", parms);
+				var result = await MakeRequest<List<Info>>("info_all", parms);
 
 				return result;
 			}
@@ -327,7 +326,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<User>("listener", parms);
+				var result = await MakeRequest<User>("listener", parms);
 
 				return result;
 			}
@@ -345,7 +344,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("order_requests", parms);
+			return await GetRequestSuccess("order_requests", parms);
 		}
 
 		public async Task<bool> PauseRequestQueue(SiteId siteId)
@@ -355,7 +354,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("pause_request_queue", parms);
+			return await GetRequestSuccess("pause_request_queue", parms);
 		}
 
 		public async Task<List<Song>> PlaybackHistory(SiteId siteId, int perPage = 0, int pageStart = 0)
@@ -369,7 +368,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("playback_history", parms);
+				var result = await MakeRequest<List<Song>>("playback_history", parms);
 
 				return result;
 			}
@@ -388,7 +387,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("rate", parms);
+			return await GetRequestSuccess("rate", parms);
 		}
 
 		public async Task<bool> Request(SiteId siteId, int songId)
@@ -399,7 +398,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("request", parms);
+			return await GetRequestSuccess("request", parms);
 		}
 
 		public async Task<bool> RequestFavoritedSongs(SiteId siteId, int limit = int.MaxValue)
@@ -410,7 +409,7 @@ namespace SS.Rainwave.API
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("request_favorited_songs", parms);
+			return await GetRequestSuccess("request_favorited_songs", parms);
 		}
 
 		public async Task<List<Request>> RequestLine(SiteId siteId, int perPage = 0, int pageStart = 0)
@@ -424,7 +423,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Request>>("request_line", parms);
+				var result = await MakeRequest<List<Request>>("request_line", parms);
 
 				return result;
 			}
@@ -443,7 +442,7 @@ namespace SS.Rainwave.API
 
 			if (limit > 0) parms.Add("limit", limit.ToString(CultureInfo.InvariantCulture));
 
-			return await getRequestSuccess("request_unrated_songs", parms);
+			return await GetRequestSuccess("request_unrated_songs", parms);
 		}
 
 		public async Task<Search> Search(SiteId siteId, string searchString)
@@ -456,7 +455,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Search>("artist", parms);
+				var result = await MakeRequest<Search>("artist", parms);
 
 				return result;
 			}
@@ -476,7 +475,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Song>("song", parms);
+				var result = await MakeRequest<Song>("song", parms);
 
 				return result;
 			}
@@ -490,7 +489,7 @@ namespace SS.Rainwave.API
 		{
 			try
 			{
-				var rets = await makeRequest<List<dynamic>>("station_song_count");
+				var rets = await MakeRequest<List<dynamic>>("station_song_count");
 
 				return rets.ToDictionary<dynamic, SiteId, int>(ret => ret.sid, ret => ret.song_count);
 			}
@@ -510,7 +509,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Station>>("stations", parms);
+				var result = await MakeRequest<List<Station>>("stations", parms);
 
 				return result;
 			}
@@ -536,7 +535,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<Info>("sync", parms);
+				var result = await MakeRequest<Info>("sync", parms);
 
 				return result;
 			}
@@ -556,7 +555,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Donation>>("tip_jar", parms);
+				var result = await MakeRequest<List<Donation>>("tip_jar", parms);
 
 				return result;
 			}
@@ -576,7 +575,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("top_100", parms);
+				var result = await MakeRequest<List<Song>>("top_100", parms);
 
 				return result;
 			}
@@ -597,7 +596,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("unrated_songs", parms);
+				var result = await MakeRequest<List<Song>>("unrated_songs", parms);
 
 				return result;
 			}
@@ -613,7 +612,7 @@ namespace SS.Rainwave.API
 						{
 							{"sid", ((int) siteId).ToString(CultureInfo.InvariantCulture)}
 						};
-			return await getRequestSuccess("unpause_request_queue", parms);
+			return await GetRequestSuccess("unpause_request_queue", parms);
 		}
 
 		public async Task<User> UserInfo(int perPage = 0, int pageStart = 0)
@@ -626,7 +625,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<User>("user_info", parms);
+				var result = await MakeRequest<User>("user_info", parms);
 
 				return result;
 			}
@@ -647,7 +646,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("user_recent_votes", parms);
+				var result = await MakeRequest<List<Song>>("user_recent_votes", parms);
 
 				return result;
 			}
@@ -668,7 +667,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<Song>>("user_requested_history", parms);
+				var result = await MakeRequest<List<Song>>("user_requested_history", parms);
 
 				return result;
 			}
@@ -687,7 +686,7 @@ namespace SS.Rainwave.API
 
 			try
 			{
-				var result = await makeRequest<List<User>>("user_search", parms);
+				var result = await MakeRequest<List<User>>("user_search", parms);
 
 				return result;
 			}
@@ -705,12 +704,12 @@ namespace SS.Rainwave.API
 							{"entry_id", entryId.ToString(CultureInfo.InvariantCulture)}
 						};
 
-			return await getRequestSuccess("vote", parms);
+			return await GetRequestSuccess("vote", parms);
 		}
 
-		private async Task<bool> getRequestSuccess(string url, Dictionary<string, string> additionalValues = null)
+		private async Task<bool> GetRequestSuccess(string url, Dictionary<string, string> additionalValues = null)
 		{
-			var result = await makeRequest(url, additionalValues);
+			var result = await MakeRequest(url, additionalValues);
 
 			try
 			{
@@ -731,7 +730,7 @@ namespace SS.Rainwave.API
 		/// <param name="url">The specific URL endpoint to send the response to</param>
 		/// <param name="additionalValues">Any additional parameters that should be passed with the request</param>
 		/// <returns>An object T containing the response</returns>
-		private async Task<T> makeRequest<T>(string url, Dictionary<string, string> additionalValues = null)
+		private async Task<T> MakeRequest<T>(string url, Dictionary<string, string> additionalValues = null)
 			where T : class
 		{
 			var attempt = 1;
@@ -804,9 +803,9 @@ namespace SS.Rainwave.API
 		/// <param name="url">The specific URL endpoint to send the response to</param>
 		/// <param name="additionalValues">Any additional parameters that should be passed with the request</param>
 		/// <returns>A dynamic object representing the JSON result</returns>
-		private async Task<JObject> makeRequest(string url, Dictionary<string, string> additionalValues = null)
+		private async Task<JObject> MakeRequest(string url, Dictionary<string, string> additionalValues = null)
 		{
-			return await makeRequest<JObject>(url, additionalValues);
+			return await MakeRequest<JObject>(url, additionalValues);
 		}
 	}
 }
