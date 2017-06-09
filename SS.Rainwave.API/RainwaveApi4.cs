@@ -14,9 +14,9 @@ namespace SS.Rainwave.API
 {
 	public class RainwaveApi4 : IRainwaveApi4
 	{
-		private static readonly ILog Log = LogManager.GetLogger(typeof(RainwaveApi4));
+		private readonly ILog _log;
 
-		public RainwaveApi4(string apiEndpoint, string userId, string apiKey)
+		public RainwaveApi4(string apiEndpoint, string userId, string apiKey, ILog log = null)
 		{
 			if (string.IsNullOrWhiteSpace(apiEndpoint))
 			{
@@ -36,6 +36,8 @@ namespace SS.Rainwave.API
 			ApiEndpoint = apiEndpoint;
 			UserId = userId;
 			ApiKey = apiKey;
+
+			_log = log ?? LogManager.GetLogger(typeof(RainwaveApi4));
 		}
 
 
@@ -741,15 +743,17 @@ namespace SS.Rainwave.API
 		/// <summary>
 		///     Makes a request to the API endpoint and returns the response
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="T">The type of object the request should be deserialized to</typeparam>
 		/// <param name="url">The specific URL endpoint to send the response to</param>
 		/// <param name="additionalValues">Any additional parameters that should be passed with the request</param>
-		/// <returns>An object T containing the response</returns>
+		/// <returns>An object of type T containing the response</returns>
 		private async Task<T> MakeRequest<T>(string url, Dictionary<string, string> additionalValues = null)
 			where T : class
 		{
 			var attempt = 1;
 
+			_log.Debug($"Begin request: \"{url}\"");
+			
 			var parms = new Dictionary<string, string>
 			{
 				{"user_id", UserId},
@@ -760,6 +764,7 @@ namespace SS.Rainwave.API
 			{
 				foreach (var value in additionalValues)
 				{
+					_log.Debug($"{value.Key}: {value.Value}");
 					parms.Add(value.Key, value.Value);
 				}
 			}
@@ -768,43 +773,37 @@ namespace SS.Rainwave.API
 			{
 				using (var client = new HttpClient())
 				{
-					try
+					var content = new FormUrlEncodedContent(parms);
+
+					var result = await client.PostAsync($"{ApiEndpoint}/{url}", content);
+
+					if (!result.IsSuccessStatusCode)
 					{
-						var content = new FormUrlEncodedContent(parms);
-
-						var result = await client.PostAsync($"{ApiEndpoint}/{url}", content);
-
-						var responseString = await result.Content.ReadAsStringAsync();
-						var returnVal = JsonConvert.DeserializeObject<T>(responseString, new JsonSerializerSettings
+						switch (result.StatusCode)
 						{
-							NullValueHandling = NullValueHandling.Ignore
-						});
+							case HttpStatusCode.BadGateway:
+								_log.Debug("Suppressing 502 BadGateway error.");
+								//suppress BadGateway
+								break;
+							default:
+								_log.Error($"Error with {url} ({result.StatusCode}: {result.ReasonPhrase})");
+								break;
+						}
 
-						return returnVal;
+						attempt++;
+						continue;
 					}
-					catch (WebException e)
+
+					var responseString = await result.Content.ReadAsStringAsync();
+					var returnVal = JsonConvert.DeserializeObject<T>(responseString, new JsonSerializerSettings
 					{
-						if (e.Status == WebExceptionStatus.ProtocolError)
-						{
-							var statusCode = ((HttpWebResponse)e.Response).StatusCode;
-							switch (statusCode)
-							{
-								case HttpStatusCode.BadGateway:
-									//suppress BadGateway
-									break;
-								default:
-									Log.Error($"Error with {url} ({statusCode})");
-									break;
-							}
-						}
-						else
-						{
-							Log.Error($"Error processing request: {url}");
-						}
-					}
+						NullValueHandling = NullValueHandling.Ignore
+					});
+
+					_log.Debug($"Request to \"{url}\" successful.");
+
+					return returnVal;
 				}
-
-				attempt++;
 			}
 
 			return null;
