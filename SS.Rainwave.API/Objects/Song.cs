@@ -31,6 +31,9 @@ namespace SS.Rainwave.API.Objects
 		[JsonProperty(PropertyName = "entry_id")]
 		public int EntryId { get; set; }
 
+		[JsonProperty(PropertyName = "entry_position")]
+		public int EntryPosition { get; set; }
+		
 		[JsonProperty(PropertyName = "entry_type")]
 		public int EntryType { get; set; }
 
@@ -43,19 +46,38 @@ namespace SS.Rainwave.API.Objects
 		[JsonProperty(PropertyName = "fave")]
 		public bool Fave { get; set; }
 
+		[JsonProperty(PropertyName = "groups")]
+		public List<Group> Groups { get; set; }
+
 		[JsonProperty(PropertyName = "id")]
 		public int Id { get; set; }
 
 		[JsonProperty(PropertyName = "length")]
 		public int Length { get; set; }
 
+		[JsonProperty(PropertyName = "link_text")]
+		public int LinkText { get; set; }
+
+		[JsonProperty(PropertyName = "origin_sid")]
+		public int OriginSid { get; set; }
+
+		[JsonProperty(PropertyName = "rating")]
+		public decimal Rating { get; set; }
+
 		[JsonProperty(PropertyName = "rating_user")]
 		public decimal RatingUser { get; set; }
+
+		[JsonProperty(PropertyName = "sid")]
+		public int Sid { get; set; }
 
 		[JsonProperty(PropertyName = "sids")]
 		public List<int> Sids { get; set; }
 
 		[JsonProperty(PropertyName = "title")]
 		public string Title { get; set; }
+
+		[JsonProperty(PropertyName = "year")]
+		public int? Year { get; set; }
+
 	}
 }
