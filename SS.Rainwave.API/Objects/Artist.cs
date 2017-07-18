@@ -11,7 +11,7 @@ namespace SS.Rainwave.API.Objects
 		[JsonProperty(PropertyName = "name")]
 		public string Name { get; set; }
 
-		[JsonProperty(PropertyName = "name_searchable")]
+		[JsonProperty(PropertyName = "artist_name_searchable")]
 		public string NameSearchable { get; set; }
 	}
 }
