@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using SS.Rainwave.API.Objects.Support;
 
 namespace SS.Rainwave.API.Objects
 {

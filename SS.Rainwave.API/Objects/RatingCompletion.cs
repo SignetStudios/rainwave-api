@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SS.Rainwave.API.Objects.Support
+namespace SS.Rainwave.API.Objects
 {
 	[JsonObject]
 	public class RatingCompletion
